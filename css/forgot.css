@@ -1,0 +1,85 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.wrapper {
+    background: #2691d9;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+}
+
+.forgot_form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 29em;
+    height: 15em;
+    background: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+}
+
+.forgot_form h2 {
+    padding: 1em;
+    padding-bottom: 3px;
+}
+
+.forgot_form button[type="submit"] {
+    width: 70%;
+    height: 50px;
+    border: 1px solid;
+    background: #2691d9;
+    border-radius: 25px;
+    font-size: 18px;
+    color: #e9f4fb;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+    text-align: center;
+}
+
+.forgot_form button[type="submit"]:hover {
+    border-color: #2691d9;
+    transition: .5s;
+}
+
+.txt_field span::before {
+    content: "";
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: #2691d9;
+    transition: .5s;
+}
+
+.txt_field label {
+    transition: .5s;
+}
+
+.txt_field input:focus~label,
+.txt_field input:valid~label {
+    top: -5px!important;
+    color: #2691d9!important;
+}
+
+.txt_field input:focus~span::before,
+.txt_field input:valid~span::before {
+    width: 100%;
+}
+
+.forgot_form h3 {
+    padding: 1em;
+    color: red;
+    text-align: center;
+}

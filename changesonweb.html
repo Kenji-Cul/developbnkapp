@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Preloader Change -->
+    <div id="preloader">
+        <div id="pre-status">
+            <div class="preload-placeholder"></div>
+        </div>
+    </div>
+
+    <!-- Media query Change -->
+    @media only screen and (max-width:800px){ #contactdiv{ display:none; } .login_form{ position:absolute; top: 70%!important; z-index: 10000; } } .main_form i { position: absolute; right: 27px; font-size: 20px; color: #333; top: 31%; transform: translateY(-50%);
+    cursor: pointer; } .login_form i { position: absolute; right: 27px; font-size: 20px; color: #333; top: 52%; transform: translateY(-50%); cursor: pointer; } .main_form i.active::before { color: #333; content: "\f070"; } .login_form i.active::before
+    { color: #333; content: "\f070"; } }
+
+    <style>
+        /* Media query Change in loans.php */
+        
+        @media only screen and (max-width:800px) {
+            .jonu strong {
+                display: block;
+                color: #e73131;
+                font-size: 17px;
+                padding-bottom: 50px;
+            }
+            .logo {
+                display: none;
+            }
+            .header_information {
+                background-color: #e73131!important;
+            }
+            .footer {
+                background: #eee;
+                text-align: center;
+            }
+            .footer h3 {
+                color: #e73131;
+            }
+            .copyright {
+                background-color: #e73131;
+            }
+            /** end clients section **/
+            /** contact section **/
+            .contact {
+                background: #eee;
+                margin-top: 90px;
+                padding: 90px 0;
+            }
+            .contact .titlepage h2 {
+                color: #e73131;
+            }
+            .main_form .contactus {
+                border: inherit;
+                margin-bottom: 20px;
+                width: 100%;
+                height: 50px;
+                background: white;
+                color: #aaa;
+                font-size: 18px;
+                font-weight: normal;
+            }
+            .main_form input::placeholder {
+                color: #aaa!important;
+            }
+            .main_form .send_btn {
+                font-size: 17px;
+                transition: ease-in all 0.5s;
+                background-color: #e73131;
+                text-transform: uppercase;
+                font-weight: 500;
+                border: #e73131 solid 3px;
+                color: #f9fcfd;
+                padding: 8px 0px;
+                margin: 0 auto;
+                max-width: 180px;
+                width: 100%;
+                display: block;
+                border-radius: 30px;
+                margin-top: 30px;
+            }
+            .main_form .send_btn:hover {
+                background-color: #ffffff;
+                transition: ease-in all 0.5s;
+                color: #e73131;
+            }
+            #request *::placeholder {
+                color: #f9fcfd;
+                opacity: 1;
+            }
+        }
+        
+        @media only screen and (max-width:800px) {
+            .navigation .navbar-collapse {
+                background: rgba(0, 0, 0, 0.7);
+            }
+        }
+        
+        @media only screen and (max-width:500px) {
+            .logo {
+                display: none;
+            }
+            .header_information {
+                background-color: #e73131!important;
+            }
+            .footer {
+                background: #eee;
+                text-align: center;
+            }
+            .footer h3 {
+                color: #e73131;
+            }
+            .copyright {
+                background-color: #e73131;
+            }
+        }
+    </style>
+
+    <!-- Loans.php script -->
+    <script>
+        const form = document.querySelector('.loanform');
+        const loanBtn = document.querySelector('#sendloan');
+        const text = document.querySelector('.errortxt p'),
+            errorTxt = document.querySelector('.errortxt');
+        const successdiv = document.querySelector('.successdiv');
+        const closediv = document.querySelector('.successdiv .cancelimg');
+        form.onsubmit = (e) => {
+            e.preventDefault();
+        }
+
+
+        closediv.onclick = function() {
+            document.querySelector('.hiden').style.display = "none";
+            //closediv.style.fill = "green";
+        }
+
+
+
+
+        loanBtn.onclick = () => {
+            let xls = new XMLHttpRequest();
+            xls.open("POST", "createloan.php", true);
+            xls.onload = () => {
+                if (xls.readyState === XMLHttpRequest.DONE) {
+                    if (xls.status === 200) {
+                        let data = xls.response;
+                        if (data === "success") {
+                            document.getElementById('occu').value = "";
+                            document.getElementById('loan').value = "";
+                            document.getElementById('type').value = "";
+                            document.getElementById('marital').value = "";
+                            document.getElementById('amou').value = "";
+                            successdiv.classList.add('hiden');
+                            document.querySelector('.hiden').style = `
+           display:flex;
+           align-items:center;
+           justify-content:center;
+          `;
+                            window.scrollTo(0, 390);
+                            errorTxt.style.display = "none";
+                            document.querySelector('.checkpass').style.display = "none";
+                            document.querySelector('.checkout').style.display = "block";
+                            // console.log(data);
+                        } else if (data === "Password field is required") {
+                            document.querySelector('.checkout').style.display = "none";
+                            document.querySelector('.checkpass').style.display = "block";
+                            text.textContent = data;
+                            errorTxt.style.display = "block";
+                        } else {
+                            text.textContent = data;
+                            errorTxt.style.display = "block";
+                        }
+                    }
+                }
+            }
+
+            let formData = new FormData(form);
+            xls.send(formData);
+        }
+
+        const pswrdfield = document.querySelector(".loanform input[type='password']");
+        const toggleBtn = document.getElementById("eyeslash");
+        toggleBtn.onclick = () => {
+                if (pswrdfield.type == "password") {
+                    pswrdfield.type = "text";
+                    toggleBtn.classList = "fas fa-eye";
+                } else {
+                    pswrdfield.type = "password";
+                    toggleBtn.classList = "fas fa-eye-slash";
+                }
+            }
+            // console.log(successdiv);
+    </script>
+
+</body>
+
+</html>
